@@ -1,5 +1,14 @@
 import d_setup
 from Users.models import User
+from django.db import connection
+
+def reset_sequence(table_name = "Users_user"):
+    with connection.cursor() as cursor:
+        cursor.execute(f'''SELECT MAX(id) FROM {table_name};''')
+        max_id = cursor.fetchone()[0] or 0
+
+        cursor.execute(f'''UPDATE sqlite_sequence SET seq = {max_id} 
+                       WHERE name = {table_name};''')
 
 def add_user():
     name = input("Enter your name: ")
