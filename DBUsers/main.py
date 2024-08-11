@@ -1,3 +1,3 @@
 import d_setup
-from Users.models import *
+from Users.models import User
 
